@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/DamageEffect.gd" id="2"]
+
+[sub_resource type="Resource" id="GrassEff"]
+script = ExtResource("2")
+phase = 1
+amount = 5
+element = 0
+inherit_card_element = true
+
+[resource]
+script = ExtResource("1")
+id = &"vine_whip"
+display_name = "藤鞭"
+description = "造成 5 点草属性伤害。\n持有此卡：草抗 +10%，火抗 -10%。"
+cost = 1
+windup_frames = 5
+active_frames = 2
+recovery_frames = 3
+intent = 0
+element = 3
+target_kind = 0
+effects = Array[Resource]([SubResource("GrassEff")])
+resonance = {3: 0.10, 1: -0.10}

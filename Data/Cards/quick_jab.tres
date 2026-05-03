@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/InterruptEffect.gd" id="2"]
+
+[sub_resource type="Resource" id="IntEff"]
+script = ExtResource("2")
+phase = 1
+fizzle_damage_multiplier = 1.5
+
+[resource]
+script = ExtResource("1")
+id = &"quick_jab"
+display_name = "迅捷刺击"
+description = "极短前摇。若敌方正在前摇，打断之并造成 6 点额外伤害。"
+cost = 1
+windup_frames = 1
+active_frames = 1
+recovery_frames = 2
+intent = 0
+element = 0
+target_kind = 0
+effects = Array[Resource]([SubResource("IntEff")])
+resonance = {}

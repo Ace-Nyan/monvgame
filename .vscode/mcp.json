@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "godot": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@coding-solo/godot-mcp"],
+      "env": {
+        "GODOT_PATH": "/Applications/Godot_mono.app/Contents/MacOS/Godot"
+      }
+    }
+  }
+}

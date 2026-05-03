@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dvw0welydhyf4" path="res://Scripts/player.gd" id="1_x87qo"]
 [ext_resource type="Script" uid="uid://45djveiai0qk" path="res://Scripts/CameraController2.gd" id="2_6h5vk"]
+[ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="3_combat"]
+[ext_resource type="Script" path="res://Scripts/Combat/CombatTrigger.gd" id="4_trig"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oqyrl"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -65,3 +67,51 @@ script = ExtResource("2_6h5vk")
 
 [node name="Camera3D" type="Camera3D" parent="player/SpringArm3D" unique_id=1255314087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.072066665, 0, 0.26504898)
+
+[node name="PlayerCombatant" type="Node" parent="player"]
+script = ExtResource("3_combat")
+display_name = "莫凡"
+max_hp = 30
+max_ap = 3
+hand_size = 4
+is_player = true
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"strike", &"strike", &"defend", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte"])
+
+[node name="Enemy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy"]
+mesh = SubResource("CapsuleMesh_fiftr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
+shape = SubResource("CapsuleShape3D_1ixah")
+
+[node name="EnemyCombatant" type="Node" parent="Enemy"]
+script = ExtResource("3_combat")
+display_name = "草精灵"
+max_hp = 24
+max_ap = 2
+hand_size = 3
+is_player = false
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"vine_whip", &"vine_whip", &"water_jet", &"weakness_curse"])
+
+[node name="CombatTrigger" type="Node" parent="." node_paths=PackedStringArray("player_combatant", "enemy_combatant", "player_node", "enemy_node")]
+script = ExtResource("4_trig")
+player_combatant = NodePath("../player/PlayerCombatant")
+enemy_combatant = NodePath("../Enemy/EnemyCombatant")
+trigger_distance = 5.0
+player_node = NodePath("../player")
+enemy_node = NodePath("../Enemy")
+
+[node name="HintLayer" type="CanvasLayer" parent="."]
+
+[node name="CombatHint" type="Label" parent="HintLayer"]
+unique_name_in_owner = true
+offset_left = 0.0
+offset_top = 60.0
+offset_right = 1280.0
+offset_bottom = 100.0
+text = "按 [E] 与敌人开战"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 0.6, 1)

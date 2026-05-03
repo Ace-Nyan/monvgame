@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/DamageEffect.gd" id="2"]
+[ext_resource type="Script" path="res://Scripts/Effects/BlockEffect.gd" id="3"]
+
+[sub_resource type="Resource" id="DmgEff"]
+script = ExtResource("2")
+phase = 1
+amount = 4
+element = 0
+inherit_card_element = true
+
+[sub_resource type="Resource" id="BlkEff"]
+script = ExtResource("3")
+phase = 1
+amount = 4
+
+[resource]
+script = ExtResource("1")
+id = &"riposte"
+display_name = "反击"
+description = "造成 4 点伤害，并获得 4 点护盾。"
+cost = 2
+windup_frames = 5
+active_frames = 2
+recovery_frames = 4
+intent = 0
+element = 0
+target_kind = 0
+effects = Array[Resource]([SubResource("DmgEff"), SubResource("BlkEff")])
+resonance = {}

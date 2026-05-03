@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/BlockEffect.gd" id="2"]
+
+[sub_resource type="Resource" id="BlkEff"]
+script = ExtResource("2")
+phase = 1
+amount = 5
+
+[resource]
+script = ExtResource("1")
+id = &"defend"
+display_name = "防御"
+description = "获得 5 点护盾。"
+cost = 1
+windup_frames = 2
+active_frames = 1
+recovery_frames = 2
+intent = 1
+element = 0
+target_kind = 1
+effects = Array[Resource]([SubResource("BlkEff")])
+resonance = {}
