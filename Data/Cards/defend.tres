@@ -22,3 +22,6 @@ element = 0
 target_kind = 1
 effects = Array[Resource]([SubResource("BlkEff")])
 resonance = {}
+range_m = 0.0
+aim_cone_deg = 360.0
+anim_id = &"guard"

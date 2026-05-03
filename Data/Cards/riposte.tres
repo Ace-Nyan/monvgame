@@ -30,3 +30,6 @@ element = 0
 target_kind = 0
 effects = Array[Resource]([SubResource("DmgEff"), SubResource("BlkEff")])
 resonance = {}
+range_m = 2.2
+aim_cone_deg = 90.0
+anim_id = &"swing_r"

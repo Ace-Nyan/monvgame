@@ -24,3 +24,6 @@ element = 2
 target_kind = 0
 effects = Array[Resource]([SubResource("WaterEff")])
 resonance = {2: 0.10, 3: -0.10}
+range_m = 10.0
+aim_cone_deg = 50.0
+anim_id = &"cast"

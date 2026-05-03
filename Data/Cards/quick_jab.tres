@@ -22,3 +22,6 @@ element = 0
 target_kind = 0
 effects = Array[Resource]([SubResource("IntEff")])
 resonance = {}
+range_m = 1.8
+aim_cone_deg = 70.0
+anim_id = &"thrust"

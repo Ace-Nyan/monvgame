@@ -23,3 +23,6 @@ element = 0
 target_kind = 0
 effects = Array[Resource]([SubResource("ResEff")])
 resonance = {}
+range_m = 8.0
+aim_cone_deg = 60.0
+anim_id = &"cast"

@@ -37,6 +37,18 @@ enum Target {
 @export var element: Element.Type = Element.Type.NONE
 @export var target_kind: Target = Target.ENEMY
 
+@export_group("射程与表演")
+## 射程（米）。melee ≈ 2.0；ranged ≈ 12.0；self ≈ 0
+@export_range(0.0, 30.0, 0.5) var range_m: float = 2.0
+## 视场角（度）：自动锁定时只考虑前方此角度内的目标
+@export_range(15.0, 360.0, 5.0) var aim_cone_deg: float = 90.0
+## 动画类别 ID。LimbAnimator 用它决定肢体怎么动：
+##   "swing_r" 右手挥砍 / "swing_l" 左手挥砍 / "thrust" 直刺
+##   "cast" 双手举起施法 / "guard" 双手抬起防御 / "stomp" 踏步
+@export var anim_id: StringName = &"swing_r"
+## 投射物（远程攻击时使用）。留空 = 近战
+@export var projectile_scene: PackedScene
+
 @export_group("效果")
 @export var effects: Array[CardEffect] = []
 

@@ -24,3 +24,6 @@ element = 3
 target_kind = 0
 effects = Array[Resource]([SubResource("GrassEff")])
 resonance = {3: 0.10, 1: -0.10}
+range_m = 4.0
+aim_cone_deg = 90.0
+anim_id = &"swing_r"

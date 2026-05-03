@@ -1,26 +1,31 @@
 ## EventBus — 全局事件总线（autoload）
 ##
-## 类似 Aalis EventBus：松耦合的发布/订阅，UI 与战斗系统不直接依赖。
-## 任何模块可监听这些信号；UI 通过它响应战斗状态变化。
+## 实时动作模式：无"回合"概念，只有连续的 AP 与施法状态。
+## UI 与战斗逻辑通过这些信号松耦合。
 extends Node
 
-# === 战斗生命周期 ===
-signal combat_started(player: Combatant, enemy: Combatant)
-signal combat_ended(winner: Combatant)
+# === 战斗者生命周期 ===
+signal combatant_registered(c)
+signal combatant_unregistered(c)
+signal combatant_died(c)
 
-# === 回合 ===
-signal turn_started(turn_index: int)
-signal turn_ended(turn_index: int)
+# === 警戒/脱战 ===
+signal aggro_started(enemy, target)
+signal aggro_lost(enemy)
 
-# === 卡牌 ===
-signal card_drawn(combatant: Combatant, card: CardInstance)
-signal card_queued(combatant: Combatant, card: CardInstance)        ## 出牌进入待结算
-signal card_phase_changed(card: CardInstance, phase: int)            ## WINDUP/ACTIVE/RECOVERY/DONE
-signal card_resolved(card: CardInstance)
-signal card_interrupted(card: CardInstance)
+# === 施法状态 ===
+signal cast_started(c, card)
+signal cast_phase_changed(c, card, phase)
+signal cast_ended(c, card)
+signal cast_interrupted(c, card)
 
 # === 数值 ===
-signal damage_dealt(source: Combatant, target: Combatant, amount: float, element: int, mitigated: float)
-signal block_changed(combatant: Combatant, value: int)
-signal hp_changed(combatant: Combatant, hp: int, max_hp: int)
-signal resistance_changed(combatant: Combatant)
+signal damage_dealt(source, target, amount, element, mitigated)
+signal block_changed(c, value)
+signal hp_changed(c, hp, max_hp)
+signal ap_changed(c, ap, max_ap)
+signal resistance_changed(c)
+
+# === 牌堆 ===
+signal hand_changed(c)
+signal card_drawn(c, card)

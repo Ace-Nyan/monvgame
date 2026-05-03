@@ -1,117 +1,281 @@
-[gd_scene format=3 uid="uid://2dv3x8aw61lt"]
+[gd_scene load_steps=20 format=3 uid="uid://2dv3x8aw61lt"]
 
-[ext_resource type="Script" uid="uid://dvw0welydhyf4" path="res://Scripts/player.gd" id="1_x87qo"]
-[ext_resource type="Script" uid="uid://45djveiai0qk" path="res://Scripts/CameraController2.gd" id="2_6h5vk"]
+[ext_resource type="Script" uid="uid://dvw0welydhyf4" path="res://Scripts/player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://45djveiai0qk" path="res://Scripts/CameraController2.gd" id="2_cam"]
 [ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="3_combat"]
-[ext_resource type="Script" path="res://Scripts/Combat/CombatTrigger.gd" id="4_trig"]
+[ext_resource type="Script" path="res://Scripts/Combat/PlayerCombatController.gd" id="4_pcc"]
+[ext_resource type="Script" path="res://Scripts/Combat/EnemyAIController.gd" id="5_aic"]
+[ext_resource type="PackedScene" path="res://Scenes/Combat/Humanoid.tscn" id="6_human"]
+[ext_resource type="PackedScene" path="res://Scenes/Combat/HUD.tscn" id="7_hud"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oqyrl"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_horizon_color = Color(0.66, 0.67, 0.68, 1)
+ground_horizon_color = Color(0.66, 0.67, 0.68, 1)
 
-[sub_resource type="Sky" id="Sky_x87qo"]
-sky_material = SubResource("ProceduralSkyMaterial_oqyrl")
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
 
-[sub_resource type="Environment" id="Environment_b6fju"]
+[sub_resource type="Environment" id="env"]
 background_mode = 2
-sky = SubResource("Sky_x87qo")
+sky = SubResource("sky")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_6h5vk"]
-size = Vector3(10, 1, 10)
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.36, 0.42, 0.32, 1)
+roughness = 0.95
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_b6fju"]
-data = PackedVector3Array(-5, 0.5, 5, 5, 0.5, 5, -5, -0.5, 5, 5, 0.5, 5, 5, -0.5, 5, -5, -0.5, 5, 5, 0.5, -5, -5, 0.5, -5, 5, -0.5, -5, -5, 0.5, -5, -5, -0.5, -5, 5, -0.5, -5, 5, 0.5, 5, 5, 0.5, -5, 5, -0.5, 5, 5, 0.5, -5, 5, -0.5, -5, 5, -0.5, 5, -5, 0.5, -5, -5, 0.5, 5, -5, -0.5, -5, -5, 0.5, 5, -5, -0.5, 5, -5, -0.5, -5, 5, 0.5, 5, -5, 0.5, 5, 5, 0.5, -5, -5, 0.5, 5, -5, 0.5, -5, 5, 0.5, -5, -5, -0.5, 5, 5, -0.5, 5, -5, -0.5, -5, 5, -0.5, 5, 5, -0.5, -5, -5, -0.5, -5)
+[sub_resource type="StandardMaterial3D" id="mat_hill"]
+albedo_color = Color(0.45, 0.4, 0.32, 1)
+roughness = 0.95
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_fiftr"]
+[sub_resource type="StandardMaterial3D" id="mat_rock"]
+albedo_color = Color(0.55, 0.55, 0.6, 1)
+roughness = 0.85
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ixah"]
+[sub_resource type="BoxMesh" id="ground_mesh"]
+size = Vector3(60, 1, 60)
+material = SubResource("mat_ground")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_b6fju"]
+[sub_resource type="BoxShape3D" id="ground_shape"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="CapsuleMesh" id="player_capsule_mesh"]
+
+[sub_resource type="CapsuleShape3D" id="capsule_shape"]
+
+[sub_resource type="SphereShape3D" id="sphere_shape"]
 radius = 0.1
 
-[node name="GameScene" type="Node3D" unique_id=1205555434]
+[node name="GameScene" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2060972516]
-environment = SubResource("Environment_b6fju")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2017096678]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, 0.75, -0.433, 0, 6, 0)
 shadow_enabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1937707837]
-mesh = SubResource("BoxMesh_6h5vk")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=312032457]
+[node name="Terrain" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=667332331]
-shape = SubResource("ConcavePolygonShape3D_b6fju")
+[node name="Ground" type="StaticBody3D" parent="Terrain"]
 
-[node name="player" type="CharacterBody3D" parent="." unique_id=857105515 node_paths=PackedStringArray("camers")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6244755, 0)
-script = ExtResource("1_x87qo")
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("ground_mesh")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("ground_shape")
+
+[node name="Hill1" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(0.94, 0, 0.34, 0, 1, 0, -0.34, 0, 0.94, 12, 0.6, 8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill1"]
+mesh = SubResource("ground_mesh")
+transform = Transform3D(0.13, 0, 0, 0, 1.5, 0, 0, 0, 0.13, 0, 0, 0)
+material_override = SubResource("mat_hill")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill1"]
+shape = SubResource("ground_shape")
+transform = Transform3D(0.13, 0, 0, 0, 1.5, 0, 0, 0, 0.13, 0, 0, 0)
+
+[node name="Hill2" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(0.7, 0, 0.7, 0, 1, 0, -0.7, 0, 0.7, -10, 1.0, -12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill2"]
+mesh = SubResource("ground_mesh")
+transform = Transform3D(0.18, 0, 0, 0, 2.5, 0, 0, 0, 0.18, 0, 0, 0)
+material_override = SubResource("mat_hill")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill2"]
+shape = SubResource("ground_shape")
+transform = Transform3D(0.18, 0, 0, 0, 2.5, 0, 0, 0, 0.18, 0, 0, 0)
+
+[node name="Rock1" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 4)
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock1"]
+mesh = SubResource("ground_mesh")
+transform = Transform3D(0.04, 0, 0, 0, 1.0, 0, 0, 0, 0.04, 0, 0, 0)
+material_override = SubResource("mat_rock")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock1"]
+shape = SubResource("ground_shape")
+transform = Transform3D(0.04, 0, 0, 0, 1.0, 0, 0, 0, 0.04, 0, 0, 0)
+
+[node name="Rock2" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(0.86, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86, 4, 0.5, -8)
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock2"]
+mesh = SubResource("ground_mesh")
+transform = Transform3D(0.05, 0, 0, 0, 0.8, 0, 0, 0, 0.05, 0, 0, 0)
+material_override = SubResource("mat_rock")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock2"]
+shape = SubResource("ground_shape")
+transform = Transform3D(0.05, 0, 0, 0, 0.8, 0, 0, 0, 0.05, 0, 0, 0)
+
+
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+script = ExtResource("1_player")
 camers = NodePath("SpringArm3D/Camera3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player" unique_id=1016245900]
-mesh = SubResource("CapsuleMesh_fiftr")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+mesh = SubResource("player_capsule_mesh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player" unique_id=732249975]
-shape = SubResource("CapsuleShape3D_1ixah")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+shape = SubResource("capsule_shape")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="player" unique_id=1134838093]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09345484, 0.0053806305)
-shape = SubResource("SphereShape3D_b6fju")
-spring_length = 3.5
-script = ExtResource("2_6h5vk")
+[node name="SpringArm3D" type="SpringArm3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("sphere_shape")
+spring_length = 4.0
+script = ExtResource("2_cam")
 
-[node name="Camera3D" type="Camera3D" parent="player/SpringArm3D" unique_id=1255314087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.072066665, 0, 0.26504898)
+[node name="Camera3D" type="Camera3D" parent="player/SpringArm3D"]
 
-[node name="PlayerCombatant" type="Node" parent="player"]
+[node name="Combatant" type="Node" parent="player"]
 script = ExtResource("3_combat")
 display_name = "莫凡"
+faction = 0
 max_hp = 30
 max_ap = 3
+ap_regen_per_sec = 0.7
 hand_size = 4
-is_player = true
-starting_card_ids = Array[StringName]([&"strike", &"strike", &"strike", &"strike", &"defend", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte"])
+aggro_radius = 0.0
+leash_radius = 0.0
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte", &"vine_whip", &"water_jet", &"weakness_curse"])
 
-[node name="Enemy" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1.6, 0)
+[node name="PlayerCombatController" type="Node" parent="player"]
+script = ExtResource("4_pcc")
+combatant_path = NodePath("../Combatant")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy"]
-mesh = SubResource("CapsuleMesh_fiftr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
-shape = SubResource("CapsuleShape3D_1ixah")
+[node name="GrassSpriteEnemy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.6, 6)
 
-[node name="EnemyCombatant" type="Node" parent="Enemy"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GrassSpriteEnemy"]
+mesh = SubResource("player_capsule_mesh")
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrassSpriteEnemy"]
+shape = SubResource("capsule_shape")
+
+[node name="Visual" type="Node3D" parent="GrassSpriteEnemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
+
+[node name="Humanoid" parent="GrassSpriteEnemy/Visual" instance=ExtResource("6_human")]
+
+[node name="Combatant" type="Node" parent="GrassSpriteEnemy"]
 script = ExtResource("3_combat")
 display_name = "草精灵"
-max_hp = 24
+faction = 1
+max_hp = 22
 max_ap = 2
+ap_regen_per_sec = 0.5
 hand_size = 3
-is_player = false
-starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"vine_whip", &"vine_whip", &"water_jet", &"weakness_curse"])
+aggro_radius = 7.0
+leash_radius = 14.0
+starting_card_ids = Array[StringName]([&"vine_whip", &"vine_whip", &"vine_whip", &"strike", &"defend"])
 
-[node name="CombatTrigger" type="Node" parent="." node_paths=PackedStringArray("player_combatant", "enemy_combatant", "player_node", "enemy_node")]
-script = ExtResource("4_trig")
-player_combatant = NodePath("../player/PlayerCombatant")
-enemy_combatant = NodePath("../Enemy/EnemyCombatant")
-trigger_distance = 5.0
-player_node = NodePath("../player")
-enemy_node = NodePath("../Enemy")
+[node name="EnemyAI" type="Node" parent="GrassSpriteEnemy"]
+script = ExtResource("5_aic")
+combatant_path = NodePath("../Combatant")
+move_speed = 3.2
 
-[node name="HintLayer" type="CanvasLayer" parent="."]
 
-[node name="CombatHint" type="Label" parent="HintLayer"]
-unique_name_in_owner = true
-offset_left = 0.0
-offset_top = 60.0
-offset_right = 1280.0
-offset_bottom = 100.0
-text = "按 [E] 与敌人开战"
-horizontal_alignment = 1
-theme_override_font_sizes/font_size = 22
-theme_override_colors/font_color = Color(1, 1, 0.6, 1)
+[node name="FireImp" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.6, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FireImp"]
+mesh = SubResource("player_capsule_mesh")
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FireImp"]
+shape = SubResource("capsule_shape")
+
+[node name="Visual" type="Node3D" parent="FireImp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
+
+[node name="Humanoid" parent="FireImp/Visual" instance=ExtResource("6_human")]
+
+[node name="Combatant" type="Node" parent="FireImp"]
+script = ExtResource("3_combat")
+display_name = "火元素"
+faction = 1
+max_hp = 18
+max_ap = 3
+ap_regen_per_sec = 0.6
+hand_size = 3
+aggro_radius = 12.0
+leash_radius = 20.0
+starting_card_ids = Array[StringName]([&"fireball", &"fireball", &"fireball", &"weakness_curse", &"defend"])
+
+[node name="EnemyAI" type="Node" parent="FireImp"]
+script = ExtResource("5_aic")
+combatant_path = NodePath("../Combatant")
+move_speed = 2.0
+
+
+[node name="StoneGuard" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.6, -2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StoneGuard"]
+mesh = SubResource("player_capsule_mesh")
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoneGuard"]
+shape = SubResource("capsule_shape")
+
+[node name="Visual" type="Node3D" parent="StoneGuard"]
+transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, 0, -1.0, 0)
+
+[node name="Humanoid" parent="StoneGuard/Visual" instance=ExtResource("6_human")]
+
+[node name="Combatant" type="Node" parent="StoneGuard"]
+script = ExtResource("3_combat")
+display_name = "石卫兵"
+faction = 1
+max_hp = 40
+max_ap = 2
+ap_regen_per_sec = 0.4
+hand_size = 3
+aggro_radius = 6.0
+leash_radius = 12.0
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"strike", &"defend", &"defend", &"riposte"])
+
+[node name="EnemyAI" type="Node" parent="StoneGuard"]
+script = ExtResource("5_aic")
+combatant_path = NodePath("../Combatant")
+move_speed = 1.6
+attack_check_interval = 0.7
+
+
+[node name="LoreNote1" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.05, 1, 0, -1, 0.05, 3, 0.05, 3)
+text = "「莫凡的笔记」
+按 1/2/3/4 出牌
+AP 自然回复
+走远即可脱战"
+modulate = Color(1, 0.95, 0.6, 1)
+outline_modulate = Color(0, 0, 0, 1)
+outline_size = 8
+pixel_size = 0.008
+no_depth_test = true
+
+[node name="LoreNote2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.05, 1, 0, -1, 0.05, -3, 0.05, -4)
+text = "符卡碎片：
+火 > 草 > 水 > 火
+看清前摇再行动"
+modulate = Color(0.85, 0.7, 1, 1)
+outline_modulate = Color(0, 0, 0, 1)
+outline_size = 8
+pixel_size = 0.008
+no_depth_test = true
+
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]

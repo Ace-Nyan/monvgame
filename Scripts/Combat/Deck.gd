@@ -34,9 +34,7 @@ func draw(n: int = 1) -> Array[CardInstance]:
 			break
 		var data: CardData = draw_pile.pop_back()
 		var inst := CardInstance.new(data, owner)
-		hand.append(inst)
 		drawn.append(inst)
-		EventBus.card_drawn.emit(owner, inst)
 	return drawn
 
 func discard(card: CardInstance) -> void:

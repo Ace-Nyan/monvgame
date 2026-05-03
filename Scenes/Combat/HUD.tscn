@@ -1,0 +1,145 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/HUD.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://Scenes/Combat/IntentBillboard.tscn" id="2_ib"]
+
+[sub_resource type="StyleBoxFlat" id="slot_style"]
+bg_color = Color(0.1, 0.1, 0.15, 0.78)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.7, 0.85, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+intent_billboard_scene = ExtResource("2_ib")
+
+[node name="Root" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HBoxTop" type="HBoxContainer" parent="Root"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 360.0
+offset_bottom = 90.0
+
+[node name="PlayerStats" type="VBoxContainer" parent="Root/HBoxTop"]
+custom_minimum_size = Vector2(320, 0)
+
+[node name="HPRow" type="HBoxContainer" parent="Root/HBoxTop/PlayerStats"]
+
+[node name="HPBar" type="ProgressBar" parent="Root/HBoxTop/PlayerStats/HPRow"]
+custom_minimum_size = Vector2(220, 22)
+max_value = 30.0
+value = 30.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="Root/HBoxTop/PlayerStats/HPRow"]
+custom_minimum_size = Vector2(96, 22)
+text = "30 / 30"
+
+[node name="APRow" type="HBoxContainer" parent="Root/HBoxTop/PlayerStats"]
+
+[node name="APBar" type="ProgressBar" parent="Root/HBoxTop/PlayerStats/APRow"]
+custom_minimum_size = Vector2(220, 14)
+max_value = 3.0
+value = 3.0
+show_percentage = false
+modulate = Color(0.4, 0.85, 1.0, 1)
+
+[node name="APLabel" type="Label" parent="Root/HBoxTop/PlayerStats/APRow"]
+custom_minimum_size = Vector2(96, 14)
+text = "3.0 / 3"
+
+[node name="Hotbar" type="HBoxContainer" parent="Root"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -110.0
+offset_right = 260.0
+offset_bottom = -10.0
+alignment = 1
+
+[node name="Slot1" type="PanelContainer" parent="Root/Hotbar"]
+custom_minimum_size = Vector2(120, 96)
+theme_override_styles/panel = SubResource("slot_style")
+
+[node name="VBox" type="VBoxContainer" parent="Root/Hotbar/Slot1"]
+alignment = 1
+
+[node name="Name" type="Label" parent="Root/Hotbar/Slot1/VBox"]
+horizontal_alignment = 1
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Hotbar/Slot1/VBox"]
+horizontal_alignment = 1
+text = ""
+
+[node name="KeyLabel" type="Label" parent="Root/Hotbar/Slot1"]
+text = "1"
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="Slot2" type="PanelContainer" parent="Root/Hotbar"]
+custom_minimum_size = Vector2(120, 96)
+theme_override_styles/panel = SubResource("slot_style")
+
+[node name="VBox" type="VBoxContainer" parent="Root/Hotbar/Slot2"]
+alignment = 1
+
+[node name="Name" type="Label" parent="Root/Hotbar/Slot2/VBox"]
+horizontal_alignment = 1
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Hotbar/Slot2/VBox"]
+horizontal_alignment = 1
+text = ""
+
+[node name="KeyLabel" type="Label" parent="Root/Hotbar/Slot2"]
+text = "2"
+
+[node name="Slot3" type="PanelContainer" parent="Root/Hotbar"]
+custom_minimum_size = Vector2(120, 96)
+theme_override_styles/panel = SubResource("slot_style")
+
+[node name="VBox" type="VBoxContainer" parent="Root/Hotbar/Slot3"]
+alignment = 1
+
+[node name="Name" type="Label" parent="Root/Hotbar/Slot3/VBox"]
+horizontal_alignment = 1
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Hotbar/Slot3/VBox"]
+horizontal_alignment = 1
+text = ""
+
+[node name="KeyLabel" type="Label" parent="Root/Hotbar/Slot3"]
+text = "3"
+
+[node name="Slot4" type="PanelContainer" parent="Root/Hotbar"]
+custom_minimum_size = Vector2(120, 96)
+theme_override_styles/panel = SubResource("slot_style")
+
+[node name="VBox" type="VBoxContainer" parent="Root/Hotbar/Slot4"]
+alignment = 1
+
+[node name="Name" type="Label" parent="Root/Hotbar/Slot4/VBox"]
+horizontal_alignment = 1
+text = "—"
+
+[node name="Cost" type="Label" parent="Root/Hotbar/Slot4/VBox"]
+horizontal_alignment = 1
+text = ""
+
+[node name="KeyLabel" type="Label" parent="Root/Hotbar/Slot4"]
+text = "4"

@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Combat/LimbAnimator.gd" id="1_anim"]
+
+[sub_resource type="StandardMaterial3D" id="mat_body"]
+albedo_color = Color(0.5, 0.55, 0.7, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_head"]
+albedo_color = Color(0.95, 0.85, 0.75, 1)
+
+[sub_resource type="BoxMesh" id="mesh_torso"]
+size = Vector3(0.6, 0.8, 0.35)
+material = SubResource("mat_body")
+
+[sub_resource type="BoxMesh" id="mesh_head"]
+size = Vector3(0.35, 0.35, 0.35)
+material = SubResource("mat_head")
+
+[sub_resource type="BoxMesh" id="mesh_arm"]
+size = Vector3(0.18, 0.7, 0.18)
+material = SubResource("mat_body")
+
+[sub_resource type="BoxMesh" id="mesh_leg"]
+size = Vector3(0.22, 0.85, 0.22)
+material = SubResource("mat_body")
+
+[node name="Humanoid" type="Node3D"]
+
+[node name="Torso" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+
+[node name="TorsoMesh" type="MeshInstance3D" parent="Torso"]
+mesh = SubResource("mesh_torso")
+
+[node name="Head" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="HeadMesh" type="MeshInstance3D" parent="Torso/Head"]
+mesh = SubResource("mesh_head")
+
+[node name="ArmL" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.3, 0)
+
+[node name="ArmLMesh" type="MeshInstance3D" parent="Torso/ArmL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+mesh = SubResource("mesh_arm")
+
+[node name="ArmR" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.3, 0)
+
+[node name="ArmRMesh" type="MeshInstance3D" parent="Torso/ArmR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+mesh = SubResource("mesh_arm")
+
+[node name="LegL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18, 0.5, 0)
+
+[node name="LegLMesh" type="MeshInstance3D" parent="LegL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0)
+mesh = SubResource("mesh_leg")
+
+[node name="LegR" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18, 0.5, 0)
+
+[node name="LegRMesh" type="MeshInstance3D" parent="LegR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42, 0)
+mesh = SubResource("mesh_leg")
+
+[node name="LimbAnimator" type="Node" parent="."]
+script = ExtResource("1_anim")
+head_path = NodePath("../Torso/Head")
+torso_path = NodePath("../Torso")
+arm_l_path = NodePath("../Torso/ArmL")
+arm_r_path = NodePath("../Torso/ArmR")
+leg_l_path = NodePath("../LegL")
+leg_r_path = NodePath("../LegR")

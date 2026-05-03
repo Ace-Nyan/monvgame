@@ -16,9 +16,7 @@ func apply(ctx: Dictionary) -> void:
 	var elem := element
 	if inherit_card_element and card != null:
 		elem = card.data.element
-	var manager: CombatManager = ctx.get("manager")
-	if manager:
-		manager.deal_damage(source, target, float(amount), elem, card)
+	source.deal_damage_to(target, float(amount), elem)
 
 func describe() -> String:
 	return "造成 %d 点伤害" % amount
