@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"witch_form"
+display_name = "魔女化"
+description = "本场战斗受到的伤害 +100%，本系卡牌威力 +100%。消耗。"
+cost = 1
+windup_frames = 3
+active_frames = 1
+recovery_frames = 3
+intent = 2
+element = 0
+target_kind = 1
+exhaust = true
+effects = Array[Resource]([])
+resonance = {}
+range_m = 0.0
+aim_cone_deg = 360.0
+anim_id = &"cast"

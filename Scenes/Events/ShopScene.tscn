@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/ShopScene.gd" id="1_shop"]
+[ext_resource type="Script" path="res://Scripts/UI/RelicBar.gd" id="2_relic"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/PauseMenu.tscn" id="3_pause"]
+
+[node name="ShopScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_shop")
+
+[node name="RelicBarController" type="Node" parent="."]
+script = ExtResource("2_relic")
+bar_path = NodePath("../RelicBar")
+tooltip_path = NodePath("../RelicTooltip")
+
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = 30.0
+offset_right = 360.0
+offset_bottom = -30.0
+alignment = 1
+
+[node name="Title" type="Label" parent="Root"]
+layout_mode = 2
+text = "商店"
+
+[node name="GoldLabel" type="Label" parent="Root"]
+layout_mode = 2
+text = "魔法币: 0"
+
+[node name="Grid" type="GridContainer" parent="Root"]
+layout_mode = 2
+columns = 3
+
+[node name="LeaveButton" type="Button" parent="Root"]
+layout_mode = 2
+text = "离开"
+
+[node name="RelicBar" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -260.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 44.0
+alignment = 2
+
+[node name="RelicTooltip" type="PanelContainer" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -320.0
+offset_top = 52.0
+offset_right = -12.0
+offset_bottom = 140.0
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="RelicTooltip"]
+layout_mode = 2
+alignment = 0
+
+[node name="Name" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="Desc" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="Effect" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_pause")]

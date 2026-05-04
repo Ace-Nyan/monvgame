@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/Encyclopedia.gd" id="1_ency"]
+
+[node name="Encyclopedia" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_ency")
+
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 0
+
+[node name="Title" type="Label" parent="Root"]
+layout_mode = 2
+text = "百科"
+horizontal_alignment = 1
+
+[node name="Tabs" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+alignment = 1
+
+[node name="CommonButton" type="Button" parent="Root/Tabs"]
+layout_mode = 2
+text = "通用卡池"
+
+[node name="WitchButton" type="Button" parent="Root/Tabs"]
+layout_mode = 2
+text = "小魔女卡池"
+
+[node name="EnemyButton" type="Button" parent="Root/Tabs"]
+layout_mode = 2
+text = "敌人(预留)"
+
+[node name="RelicButton" type="Button" parent="Root/Tabs"]
+layout_mode = 2
+text = "遗物图鉴"
+
+[node name="RelicFilters" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+alignment = 1
+
+[node name="AllRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "全部"
+
+[node name="LowRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "低阶"
+
+[node name="MidRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "中阶"
+
+[node name="HighRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "高阶"
+
+[node name="ShopRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "商店"
+
+[node name="EventRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "事件"
+
+[node name="StarterRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "初始"
+
+[node name="UniqueRelics" type="Button" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "唯一"
+
+[node name="DebugAll" type="CheckBox" parent="Root/RelicFilters"]
+layout_mode = 2
+text = "调试：显示全部"
+
+[node name="Content" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ListScroll" type="ScrollContainer" parent="Root/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(260, 0)
+size_flags_vertical = 3
+
+[node name="List" type="VBoxContainer" parent="Root/Content/ListScroll"]
+layout_mode = 2
+alignment = 0
+
+[node name="Detail" type="PanelContainer" parent="Root/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DetailVBox" type="VBoxContainer" parent="Root/Content/Detail"]
+layout_mode = 2
+alignment = 0
+
+[node name="DetailTitle" type="Label" parent="Root/Content/Detail/DetailVBox"]
+layout_mode = 2
+text = ""
+
+[node name="DetailBody" type="Label" parent="Root/Content/Detail/DetailVBox"]
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Bottom" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+alignment = 1
+
+[node name="BackButton" type="Button" parent="Root/Bottom"]
+layout_mode = 2
+text = "返回"

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Effects/DamageEffect.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Scenes/Combat/FireballProjectile.tscn" id="3"]
 
 [sub_resource type="Resource" id="FireEff"]
 script = ExtResource("2")
@@ -14,7 +15,7 @@ inherit_card_element = true
 script = ExtResource("1")
 id = &"fireball"
 display_name = "火球术"
-description = "造成 7 点火属性伤害。\n持有此卡：火抗 +10%，水抗 -10%。"
+description = "造成 7 点火属性伤害。"
 cost = 2
 windup_frames = 8
 active_frames = 3
@@ -23,7 +24,8 @@ intent = 0
 element = 1
 target_kind = 0
 effects = Array[Resource]([SubResource("FireEff")])
-resonance = {1: 0.10, 2: -0.10}
-range_m = 12.0
+resonance = {}
+range_m = 36.0
 aim_cone_deg = 60.0
 anim_id = &"cast"
+projectile_scene = ExtResource("3")

@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/RewardScene.gd" id="1_reward"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/PauseMenu.tscn" id="2_pause"]
+
+[node name="RewardScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_reward")
+
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = 40.0
+offset_right = 260.0
+offset_bottom = -40.0
+alignment = 1
+
+[node name="Title" type="Label" parent="Root"]
+layout_mode = 2
+text = "战斗奖励"
+
+[node name="Desc" type="Label" parent="Root"]
+layout_mode = 2
+text = "你获得了一份战利品。"
+
+[node name="GoldLabel" type="Label" parent="Root"]
+layout_mode = 2
+text = "魔法币 +0"
+
+[node name="ContinueButton" type="Button" parent="Root"]
+layout_mode = 2
+text = "返回地图"
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_pause")]

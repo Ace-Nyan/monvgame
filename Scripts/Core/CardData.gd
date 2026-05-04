@@ -13,6 +13,12 @@ enum Intent {
 	UTILITY,  # 🔧
 }
 
+enum Rarity {
+	WHITE,
+	BLUE,
+	GOLD,
+}
+
 enum Target {
 	ENEMY,    # 单体敌人
 	SELF,     # 自身
@@ -36,6 +42,13 @@ enum Target {
 @export var intent: Intent = Intent.ATTACK
 @export var element: Element.Type = Element.Type.NONE
 @export var target_kind: Target = Target.ENEMY
+@export var rarity: Rarity = Rarity.WHITE
+
+@export_group("标签")
+## retain: 回合结束时保留在手牌中
+@export var retain: bool = false
+## exhaust: 使用后移除（不进入弃牌堆）
+@export var exhaust: bool = false
 
 @export_group("射程与表演")
 ## 射程（米）。melee ≈ 2.0；ranged ≈ 12.0；self ≈ 0

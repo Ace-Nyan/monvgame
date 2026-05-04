@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/CharacterSelect.gd" id="1_select"]
+[ext_resource type="Texture2D" path="res://picture/xiaomonv_demo.png" id="2_bg"]
+
+[node name="CharacterSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_select")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.35)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = 40.0
+offset_right = 220.0
+offset_bottom = -40.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "角色选择"
+
+[node name="Name" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "小魔女"
+
+[node name="Desc" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "属性: 火 / 水 / 草\n生命: 60  魔力: 30  防御: 0  魔抗: 10"
+
+[node name="ConfirmButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "确认"
+
+[node name="BackButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "返回"

@@ -1,0 +1,87 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/MainMenu.gd" id="1_menu"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_menu")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/VBox"]
+layout_mode = 2
+text = "MONV DEMO"
+
+[node name="StartButton" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "开始游戏"
+
+[node name="EncyclopediaButton" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "查看卡组"
+
+[node name="TutorialButton" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "新手教程"
+
+[node name="QuitButton" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "退出"
+
+[node name="TutorialOverlay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+visible = false
+
+[node name="Dim" type="ColorRect" parent="TutorialOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.72)
+
+[node name="Panel" type="PanelContainer" parent="TutorialOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -220.0
+offset_right = 300.0
+offset_bottom = 220.0
+
+[node name="VBox" type="VBoxContainer" parent="TutorialOverlay/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="TutorialOverlay/Panel/VBox"]
+layout_mode = 2
+text = "新手教程"
+horizontal_alignment = 1
+
+[node name="TutorialText" type="RichTextLabel" parent="TutorialOverlay/Panel/VBox"]
+custom_minimum_size = Vector2(540, 300)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = true
+text = "[b]基础目标[/b]\n在每场作战中击败所有敌人。角色有生命、魔力和护盾；敌人攻击前会显示策略，先看清再行动。\n\n[b]作战回合[/b]\n你的主要输出发生在攻击回合。右上会显示当前阶段；攻击回合可以主动出牌，应对回合主要观察敌人的策略和剩余时间。\n\n[b]怎么选择手牌[/b]\n战斗开始后，底部热键栏会显示手牌。\n1. 按 1 到 5 直接选中对应槽位的手牌。\n2. 鼠标滚轮向上或向下可以切换到上一张或下一张可用手牌。\n3. 被选中的手牌会高亮放大。\n\n[b]怎么打出手牌[/b]\n1. 先选中一张手牌。\n2. 点击鼠标左键即可打出当前选中的手牌。\n3. 若费用不足，这张牌不会成功打出。攻击回合消耗 AP，应对回合消耗 MP。\n\n[b]常用操作[/b]\n1. 按 C 结束攻击回合。\n2. 按 Q 查看抽牌堆。\n3. 按 E 查看弃牌堆。\n4. 按 G 查看整副牌。\n5. 按 Esc 打开暂停菜单。\n\n[b]上手建议[/b]\n先用低费牌试着熟悉选牌和出牌节奏，再观察敌人的策略提示，避免把回合资源一次打空。"
+
+[node name="CloseButton" type="Button" parent="TutorialOverlay/Panel/VBox"]
+layout_mode = 2
+text = "关闭"

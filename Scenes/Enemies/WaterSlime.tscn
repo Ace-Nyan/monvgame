@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="1_combat"]
+[ext_resource type="Script" path="res://Scripts/Enemies/WaterSlimeAI.gd" id="2_ai"]
+
+[sub_resource type="SphereMesh" id="slime_mesh"]
+radius = 0.5
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="slime_mat"]
+albedo_color = Color(0.3, 0.6, 1, 0.9)
+
+[sub_resource type="SphereShape3D" id="slime_shape"]
+radius = 0.55
+
+[node name="WaterSlime" type="CharacterBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("slime_mesh")
+material_override = SubResource("slime_mat")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("slime_shape")
+
+[node name="Combatant" type="Node" parent="."]
+script = ExtResource("1_combat")
+display_name = "水史莱姆"
+faction = 1
+max_hp = 30
+max_ap = 1
+max_mp = 0
+hand_size = 1
+aggro_radius = 0.0
+leash_radius = 0.0
+base_def = 0
+base_res = 30
+immune_elements = Array[int]([2])
+starting_card_ids = Array[StringName]([&"slime_water_shot", &"slime_damage_up"])
+
+[node name="WaterSlimeAI" type="Node" parent="."]
+script = ExtResource("2_ai")
+combatant_path = NodePath("../Combatant")

@@ -1,12 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://2dv3x8aw61lt"]
+[gd_scene load_steps=9 format=3 uid="uid://2dv3x8aw61lt"]
 
 [ext_resource type="Script" uid="uid://dvw0welydhyf4" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://45djveiai0qk" path="res://Scripts/CameraController2.gd" id="2_cam"]
-[ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="3_combat"]
-[ext_resource type="Script" path="res://Scripts/Combat/PlayerCombatController.gd" id="4_pcc"]
-[ext_resource type="Script" path="res://Scripts/Combat/EnemyAIController.gd" id="5_aic"]
+[ext_resource type="Script" uid="uid://ky8e23gu52km" path="res://Scripts/Combat/Combatant.gd" id="3_combat"]
+[ext_resource type="Script" uid="uid://ced5atmkfkw78" path="res://Scripts/Combat/PlayerCombatController.gd" id="4_pcc"]
+[ext_resource type="Script" uid="uid://d3fipie006ktl" path="res://Scripts/Combat/EnemyAIController.gd" id="5_aic"]
+[ext_resource type="Script" path="res://Scripts/Combat/CombatManager.gd" id="8_cm"]
 [ext_resource type="PackedScene" path="res://Scenes/Combat/Humanoid.tscn" id="6_human"]
-[ext_resource type="PackedScene" path="res://Scenes/Combat/HUD.tscn" id="7_hud"]
+[ext_resource type="PackedScene" uid="uid://cau7kpu0lykta" path="res://Scenes/Combat/HUD.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/PauseMenu.tscn" id="9_pause"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_horizon_color = Color(0.66, 0.67, 0.68, 1)
@@ -25,6 +27,13 @@ glow_enabled = true
 albedo_color = Color(0.36, 0.42, 0.32, 1)
 roughness = 0.95
 
+[sub_resource type="BoxMesh" id="ground_mesh"]
+material = SubResource("mat_ground")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="ground_shape"]
+size = Vector3(60, 1, 60)
+
 [sub_resource type="StandardMaterial3D" id="mat_hill"]
 albedo_color = Color(0.45, 0.4, 0.32, 1)
 roughness = 0.95
@@ -33,13 +42,6 @@ roughness = 0.95
 albedo_color = Color(0.55, 0.55, 0.6, 1)
 roughness = 0.85
 
-[sub_resource type="BoxMesh" id="ground_mesh"]
-size = Vector3(60, 1, 60)
-material = SubResource("mat_ground")
-
-[sub_resource type="BoxShape3D" id="ground_shape"]
-size = Vector3(60, 1, 60)
-
 [sub_resource type="CapsuleMesh" id="player_capsule_mesh"]
 
 [sub_resource type="CapsuleShape3D" id="capsule_shape"]
@@ -47,235 +49,144 @@ size = Vector3(60, 1, 60)
 [sub_resource type="SphereShape3D" id="sphere_shape"]
 radius = 0.1
 
-[node name="GameScene" type="Node3D"]
+[node name="GameScene" type="Node3D" unique_id=436682824]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1665390001]
 environment = SubResource("env")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=897007256]
 transform = Transform3D(-0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, 0.75, -0.433, 0, 6, 0)
 shadow_enabled = true
 
+[node name="Terrain" type="Node3D" parent="." unique_id=580305556]
 
-[node name="Terrain" type="Node3D" parent="."]
+[node name="Ground" type="StaticBody3D" parent="Terrain" unique_id=1641625388]
 
-[node name="Ground" type="StaticBody3D" parent="Terrain"]
-
-[node name="Mesh" type="MeshInstance3D" parent="Terrain/Ground"]
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Ground" unique_id=1930948715]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("ground_mesh")
 
-[node name="Shape" type="CollisionShape3D" parent="Terrain/Ground"]
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Ground" unique_id=915397751]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ground_shape")
 
-[node name="Hill1" type="StaticBody3D" parent="Terrain"]
+[node name="Hill1" type="StaticBody3D" parent="Terrain" unique_id=1735384239]
 transform = Transform3D(0.94, 0, 0.34, 0, 1, 0, -0.34, 0, 0.94, 12, 0.6, 8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill1"]
-mesh = SubResource("ground_mesh")
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill1" unique_id=531265176]
 transform = Transform3D(0.13, 0, 0, 0, 1.5, 0, 0, 0, 0.13, 0, 0, 0)
 material_override = SubResource("mat_hill")
-
-[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill1"]
-shape = SubResource("ground_shape")
-transform = Transform3D(0.13, 0, 0, 0, 1.5, 0, 0, 0, 0.13, 0, 0, 0)
-
-[node name="Hill2" type="StaticBody3D" parent="Terrain"]
-transform = Transform3D(0.7, 0, 0.7, 0, 1, 0, -0.7, 0, 0.7, -10, 1.0, -12)
-
-[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill2"]
 mesh = SubResource("ground_mesh")
+
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill1" unique_id=593003557]
+transform = Transform3D(0.13, 0, 0, 0, 1.5, 0, 0, 0, 0.13, 0, 0, 0)
+shape = SubResource("ground_shape")
+
+[node name="Hill2" type="StaticBody3D" parent="Terrain" unique_id=61468684]
+transform = Transform3D(0.7, 0, 0.7, 0, 1, 0, -0.7, 0, 0.7, -10, 1, -12)
+
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Hill2" unique_id=910640703]
 transform = Transform3D(0.18, 0, 0, 0, 2.5, 0, 0, 0, 0.18, 0, 0, 0)
 material_override = SubResource("mat_hill")
+mesh = SubResource("ground_mesh")
 
-[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill2"]
-shape = SubResource("ground_shape")
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Hill2" unique_id=1768354831]
 transform = Transform3D(0.18, 0, 0, 0, 2.5, 0, 0, 0, 0.18, 0, 0, 0)
+shape = SubResource("ground_shape")
 
-[node name="Rock1" type="StaticBody3D" parent="Terrain"]
+[node name="Rock1" type="StaticBody3D" parent="Terrain" unique_id=1250047988]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 4)
 
-[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock1"]
-mesh = SubResource("ground_mesh")
-transform = Transform3D(0.04, 0, 0, 0, 1.0, 0, 0, 0, 0.04, 0, 0, 0)
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock1" unique_id=1086393299]
+transform = Transform3D(0.04, 0, 0, 0, 1, 0, 0, 0, 0.04, 0, 0, 0)
 material_override = SubResource("mat_rock")
+mesh = SubResource("ground_mesh")
 
-[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock1"]
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock1" unique_id=985957446]
+transform = Transform3D(0.04, 0, 0, 0, 1, 0, 0, 0, 0.04, 0, 0, 0)
 shape = SubResource("ground_shape")
-transform = Transform3D(0.04, 0, 0, 0, 1.0, 0, 0, 0, 0.04, 0, 0, 0)
 
-[node name="Rock2" type="StaticBody3D" parent="Terrain"]
+[node name="Rock2" type="StaticBody3D" parent="Terrain" unique_id=2009129639]
 transform = Transform3D(0.86, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86, 4, 0.5, -8)
 
-[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock2"]
-mesh = SubResource("ground_mesh")
+[node name="Mesh" type="MeshInstance3D" parent="Terrain/Rock2" unique_id=1145553822]
 transform = Transform3D(0.05, 0, 0, 0, 0.8, 0, 0, 0, 0.05, 0, 0, 0)
 material_override = SubResource("mat_rock")
+mesh = SubResource("ground_mesh")
 
-[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock2"]
-shape = SubResource("ground_shape")
+[node name="Shape" type="CollisionShape3D" parent="Terrain/Rock2" unique_id=1627265283]
 transform = Transform3D(0.05, 0, 0, 0, 0.8, 0, 0, 0, 0.05, 0, 0, 0)
+shape = SubResource("ground_shape")
 
-
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camers")]
+[node name="player" type="CharacterBody3D" parent="." unique_id=1513327679 node_paths=PackedStringArray("camers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 script = ExtResource("1_player")
 camers = NodePath("SpringArm3D/Camera3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player" unique_id=346960610]
 mesh = SubResource("player_capsule_mesh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player" unique_id=1129067346]
 shape = SubResource("capsule_shape")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="player"]
+[node name="SpringArm3D" type="SpringArm3D" parent="player" unique_id=1597706009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("sphere_shape")
 spring_length = 4.0
 script = ExtResource("2_cam")
 
-[node name="Camera3D" type="Camera3D" parent="player/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="player/SpringArm3D" unique_id=2087946277]
 
-[node name="Combatant" type="Node" parent="player"]
+[node name="Combatant" type="Node" parent="player" unique_id=1159086023]
 script = ExtResource("3_combat")
 display_name = "莫凡"
 faction = 0
-max_hp = 30
-max_ap = 3
-ap_regen_per_sec = 0.7
-hand_size = 4
 aggro_radius = 0.0
 leash_radius = 0.0
-starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte", &"vine_whip", &"water_jet", &"weakness_curse"])
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte", &"vine_whip", &"water_jet", &"weakness_curse", &"roll"])
 
-[node name="PlayerCombatController" type="Node" parent="player"]
+[node name="PlayerCombatController" type="Node" parent="player" unique_id=1554139312]
 script = ExtResource("4_pcc")
-combatant_path = NodePath("../Combatant")
+combat_manager_path = NodePath("../../CombatManager")
 
-
-[node name="GrassSpriteEnemy" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.6, 6)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GrassSpriteEnemy"]
-mesh = SubResource("player_capsule_mesh")
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GrassSpriteEnemy"]
-shape = SubResource("capsule_shape")
-
-[node name="Visual" type="Node3D" parent="GrassSpriteEnemy"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
-
-[node name="Humanoid" parent="GrassSpriteEnemy/Visual" instance=ExtResource("6_human")]
-
-[node name="Combatant" type="Node" parent="GrassSpriteEnemy"]
-script = ExtResource("3_combat")
-display_name = "草精灵"
-faction = 1
-max_hp = 22
-max_ap = 2
-ap_regen_per_sec = 0.5
-hand_size = 3
-aggro_radius = 7.0
-leash_radius = 14.0
-starting_card_ids = Array[StringName]([&"vine_whip", &"vine_whip", &"vine_whip", &"strike", &"defend"])
-
-[node name="EnemyAI" type="Node" parent="GrassSpriteEnemy"]
-script = ExtResource("5_aic")
-combatant_path = NodePath("../Combatant")
-move_speed = 3.2
-
-
-[node name="FireImp" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1.6, -6)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FireImp"]
-mesh = SubResource("player_capsule_mesh")
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FireImp"]
-shape = SubResource("capsule_shape")
-
-[node name="Visual" type="Node3D" parent="FireImp"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
-
-[node name="Humanoid" parent="FireImp/Visual" instance=ExtResource("6_human")]
-
-[node name="Combatant" type="Node" parent="FireImp"]
-script = ExtResource("3_combat")
-display_name = "火元素"
-faction = 1
-max_hp = 18
-max_ap = 3
-ap_regen_per_sec = 0.6
-hand_size = 3
-aggro_radius = 12.0
-leash_radius = 20.0
-starting_card_ids = Array[StringName]([&"fireball", &"fireball", &"fireball", &"weakness_curse", &"defend"])
-
-[node name="EnemyAI" type="Node" parent="FireImp"]
-script = ExtResource("5_aic")
-combatant_path = NodePath("../Combatant")
-move_speed = 2.0
-
-
-[node name="StoneGuard" type="CharacterBody3D" parent="."]
+[node name="StoneGuard" type="CharacterBody3D" parent="." unique_id=1282233497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.6, -2)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StoneGuard"]
-mesh = SubResource("player_capsule_mesh")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StoneGuard" unique_id=1988672050]
 visible = false
+mesh = SubResource("player_capsule_mesh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StoneGuard"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StoneGuard" unique_id=1912204846]
 shape = SubResource("capsule_shape")
 
-[node name="Visual" type="Node3D" parent="StoneGuard"]
-transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, 0, -1.0, 0)
+[node name="Visual" type="Node3D" parent="StoneGuard" unique_id=1631940310]
+transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, 0, -1, 0)
 
-[node name="Humanoid" parent="StoneGuard/Visual" instance=ExtResource("6_human")]
+[node name="Humanoid" parent="StoneGuard/Visual" unique_id=366538083 instance=ExtResource("6_human")]
 
-[node name="Combatant" type="Node" parent="StoneGuard"]
+[node name="Combatant" type="Node" parent="StoneGuard" unique_id=2033317015]
 script = ExtResource("3_combat")
 display_name = "石卫兵"
-faction = 1
 max_hp = 40
 max_ap = 2
 ap_regen_per_sec = 0.4
 hand_size = 3
 aggro_radius = 6.0
 leash_radius = 12.0
+dominant_element = 1
 starting_card_ids = Array[StringName]([&"strike", &"strike", &"strike", &"defend", &"defend", &"riposte"])
 
-[node name="EnemyAI" type="Node" parent="StoneGuard"]
+[node name="EnemyAI" type="Node" parent="StoneGuard" unique_id=956511870]
 script = ExtResource("5_aic")
-combatant_path = NodePath("../Combatant")
-move_speed = 1.6
+move_speed = 0.0
 attack_check_interval = 0.7
 
+[node name="CombatManager" type="Node" parent="." unique_id=182736470]
+script = ExtResource("8_cm")
+player_path = NodePath("player/Combatant")
 
-[node name="LoreNote1" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.05, 1, 0, -1, 0.05, 3, 0.05, 3)
-text = "「莫凡的笔记」
-按 1/2/3/4 出牌
-AP 自然回复
-走远即可脱战"
-modulate = Color(1, 0.95, 0.6, 1)
-outline_modulate = Color(0, 0, 0, 1)
-outline_size = 8
-pixel_size = 0.008
-no_depth_test = true
+[node name="HUD" parent="." unique_id=688807540 instance=ExtResource("7_hud")]
+combat_manager_path = NodePath("../CombatManager")
 
-[node name="LoreNote2" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.05, 1, 0, -1, 0.05, -3, 0.05, -4)
-text = "符卡碎片：
-火 > 草 > 水 > 火
-看清前摇再行动"
-modulate = Color(0.85, 0.7, 1, 1)
-outline_modulate = Color(0, 0, 0, 1)
-outline_size = 8
-pixel_size = 0.008
-no_depth_test = true
-
-
-[node name="HUD" parent="." instance=ExtResource("7_hud")]
+[node name="PauseMenu" parent="." instance=ExtResource("9_pause")]
+capture_mouse_on_resume = true

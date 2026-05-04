@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"strange_wand"
+display_name = "奇异的魔杖"
+description = "不稳定的法器。"
+effect_text = "随机变更一种属性，并移除被变更属性的所有卡牌。"
+category = 6
+icon_color = Color(0.6, 0.9, 0.6, 1)

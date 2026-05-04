@@ -16,13 +16,17 @@ var _body: CharacterBody3D
 var _state: int = 0  # 0 idle, 1 chase, 2 attack
 var _scan_timer: float = 0.0
 var _target = null
+var _manager: CombatManager
 
 func _ready() -> void:
 	_combatant = get_node_or_null(combatant_path) as Combatant
 	if _combatant:
 		_body = _combatant.body3d as CharacterBody3D
+	_manager = get_tree().get_root().find_child("CombatManager", true, false) as CombatManager
 
 func _physics_process(delta: float) -> void:
+	if _manager != null:
+		return
 	if _combatant == null or not _combatant.is_alive():
 		return
 	if _body == null:

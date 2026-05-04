@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/EnemyDamageUpEffect.gd" id="2"]
+
+[sub_resource type="Resource" id="BuffEff"]
+script = ExtResource("2")
+phase = 1
+amount = 2
+
+[resource]
+script = ExtResource("1")
+id = &"slime_damage_up"
+display_name = "伤害提升"
+description = "永久提升自身 2 点伤害。"
+cost = 1
+windup_frames = 4
+active_frames = 1
+recovery_frames = 3
+intent = 2
+element = 0
+target_kind = 1
+effects = Array[Resource]([SubResource("BuffEff")])
+resonance = {}
+range_m = 0.0
+aim_cone_deg = 360.0
+anim_id = &"cast"

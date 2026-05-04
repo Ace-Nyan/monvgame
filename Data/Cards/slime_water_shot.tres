@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Effects/DamageEffect.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Scenes/Combat/WaterBallProjectile.tscn" id="3"]
+
+[sub_resource type="Resource" id="ShotDmg"]
+script = ExtResource("2")
+phase = 1
+amount = 8
+element = 2
+inherit_card_element = true
+
+[resource]
+script = ExtResource("1")
+id = &"slime_water_shot"
+display_name = "水弹"
+description = "发射水弹，造成 8 点水属性伤害。"
+cost = 1
+windup_frames = 6
+active_frames = 2
+recovery_frames = 4
+intent = 0
+element = 2
+target_kind = 0
+effects = Array[Resource]([SubResource("ShotDmg")])
+resonance = {}
+range_m = 12.0
+aim_cone_deg = 60.0
+anim_id = &"cast"
+projectile_scene = ExtResource("3")

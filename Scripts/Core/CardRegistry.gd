@@ -1,21 +1,44 @@
 ## CardRegistry — 卡牌目录（autoload）
 ##
-## 启动时扫描 res://Data/Cards/*.tres 并注册到字典。
+## 启动时显式加载内置卡牌资源并注册到字典。
 ## 玩家自定义卡也可放入 user://Cards/，由 register_user_cards() 加载。
 extends Node
 
-const CARD_DIR := "res://Data/Cards"
 const USER_CARD_DIR := "user://Cards"
+const BUILTIN_CARDS := [
+	preload("res://Data/Cards/defend.tres"),
+	preload("res://Data/Cards/delirium.tres"),
+	preload("res://Data/Cards/fireball.tres"),
+	preload("res://Data/Cards/magic_barrage.tres"),
+	preload("res://Data/Cards/magic_manual.tres"),
+	preload("res://Data/Cards/mana_boost.tres"),
+	preload("res://Data/Cards/quick_jab.tres"),
+	preload("res://Data/Cards/riposte.tres"),
+	preload("res://Data/Cards/roll.tres"),
+	preload("res://Data/Cards/slime_damage_up.tres"),
+	preload("res://Data/Cards/slime_water_cannon.tres"),
+	preload("res://Data/Cards/slime_water_shot.tres"),
+	preload("res://Data/Cards/strike.tres"),
+	preload("res://Data/Cards/vine_whip.tres"),
+	preload("res://Data/Cards/water_jet.tres"),
+	preload("res://Data/Cards/weakness_curse.tres"),
+	preload("res://Data/Cards/witch_form.tres"),
+	preload("res://Data/Cards/witch_judgement.tres"),
+	preload("res://Data/Cards/witch_touch.tres"),
+]
 
 var _cards: Dictionary = {}   ## id -> CardData
 
 func _ready() -> void:
-	_scan_dir(CARD_DIR)
+	_load_builtin_cards()
 	_scan_dir(USER_CARD_DIR)
 
+func _load_builtin_cards() -> void:
+	for card in BUILTIN_CARDS:
+		if card is CardData:
+			register(card)
+
 func _scan_dir(path: String) -> void:
-	if not DirAccess.dir_exists_absolute(path):
-		return
 	var dir := DirAccess.open(path)
 	if dir == null:
 		return

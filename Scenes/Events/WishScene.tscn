@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/WishScene.gd" id="1_wish"]
+[ext_resource type="Script" path="res://Scripts/UI/RelicBar.gd" id="2_relic"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/PauseMenu.tscn" id="3_pause"]
+
+[node name="WishScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_wish")
+
+[node name="RelicBarController" type="Node" parent="."]
+script = ExtResource("2_relic")
+bar_path = NodePath("../RelicBar")
+tooltip_path = NodePath("../RelicTooltip")
+
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = 40.0
+offset_right = 260.0
+offset_bottom = -40.0
+alignment = 1
+
+[node name="Title" type="Label" parent="Root"]
+layout_mode = 2
+text = "得偿所愿"
+
+[node name="Desc" type="Label" parent="Root"]
+layout_mode = 2
+text = "你感受到某种遗物在呼唤。"
+
+[node name="Options" type="VBoxContainer" parent="Root"]
+layout_mode = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="Root"]
+layout_mode = 2
+text = "继续"
+visible = false
+
+[node name="RelicBar" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -260.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 44.0
+alignment = 2
+
+[node name="RelicTooltip" type="PanelContainer" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -320.0
+offset_top = 52.0
+offset_right = -12.0
+offset_bottom = 140.0
+visible = false
+
+[node name="VBox" type="VBoxContainer" parent="RelicTooltip"]
+layout_mode = 2
+alignment = 0
+
+[node name="Name" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="Desc" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="Effect" type="Label" parent="RelicTooltip/VBox"]
+layout_mode = 2
+text = ""
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_pause")]

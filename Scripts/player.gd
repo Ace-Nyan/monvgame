@@ -1,10 +1,11 @@
 extends CharacterBody3D
 
 
-@export var speed = 5.0
+@export var speed = 2.0
 @export var jump_velocity = 4.5
 
 @export var camers:Camera3D
+var _last_move_dir: Vector3 = Vector3.ZERO
 
 
 func _physics_process(delta: float) -> void:
@@ -22,6 +23,7 @@ func _physics_process(delta: float) -> void:
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, camers.global_rotation.y)
 	if direction:
+		_last_move_dir = direction
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 	else:
@@ -29,3 +31,6 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, speed)
 
 	move_and_slide()
+
+func get_move_dir() -> Vector3:
+	return _last_move_dir

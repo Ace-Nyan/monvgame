@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"archmage_wand"
+display_name = "大法师的魔杖"
+description = "传说中的法器。"
+effect_text = "选择变更一种属性，移除被变更属性的所有卡牌；从三组被变更属性的牌堆中选择一组加入你的卡组。（与奇异的魔杖互斥）"
+category = 6
+icon_color = Color(0.3, 0.6, 1, 1)

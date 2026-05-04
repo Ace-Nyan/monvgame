@@ -6,14 +6,14 @@
 [sub_resource type="Resource" id="ResEff"]
 script = ExtResource("2")
 phase = 1
-shifts = {1: -0.30}
+shifts = {1: 0.30}
 target_self = false
 
 [resource]
 script = ExtResource("1")
 id = &"weakness_curse"
 display_name = "弱点诅咒"
-description = "目标火抗 -30%（持续本场战斗）。"
+description = "下一次火属性伤害无视 30% 法抗。"
 cost = 1
 windup_frames = 6
 active_frames = 2

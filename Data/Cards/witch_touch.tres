@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"witch_touch"
+display_name = "魔女之触"
+description = "减少对方 20 点法术攻击，11 点物理攻击。消耗，保留。"
+cost = 2
+windup_frames = 4
+active_frames = 2
+recovery_frames = 4
+intent = 3
+element = 0
+target_kind = 0
+retain = true
+exhaust = true
+effects = Array[Resource]([])
+resonance = {}
+range_m = 6.0
+aim_cone_deg = 60.0
+anim_id = &"cast"

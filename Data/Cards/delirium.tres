@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CardData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"delirium"
+display_name = "迷离"
+description = "抽 1-2 张与自身属性对应的卡牌。"
+cost = 1
+windup_frames = 2
+active_frames = 1
+recovery_frames = 2
+intent = 4
+element = 0
+target_kind = 3
+exhaust = true
+effects = Array[Resource]([])
+resonance = {}
+range_m = 0.0
+aim_cone_deg = 360.0
+anim_id = &"cast"

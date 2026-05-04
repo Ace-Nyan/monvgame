@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"red_scarf"
+display_name = "红围巾"
+description = "某位魔女曾经佩戴的围巾，如今还残留着一丝魔力"
+effect_text = "拾取后回复 5 点生命，生命上限 +10"
+category = 1
+icon_color = Color(0.9, 0.2, 0.2, 1)

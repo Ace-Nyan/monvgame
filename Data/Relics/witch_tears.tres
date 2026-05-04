@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"witch_tears"
+display_name = "魔女的眼泪"
+description = "晶莹而危险。"
+effect_text = "魔女化时受到的伤害 -50%，本系卡牌可同时对多个敌人/友军生效。"
+category = 6
+icon_color = Color(0.4, 0.8, 1, 1)

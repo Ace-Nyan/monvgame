@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"king_ring"
+display_name = "国王的护戒"
+description = "历史上某位国王留下的戒指，如今已满是灰尘"
+effect_text = "战斗中获得的护盾可以保留至下一回合"
+category = 2
+icon_color = Color(0.95, 0.85, 0.4, 1)

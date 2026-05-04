@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"witch_hat_upgraded"
+display_name = "魔女存续之帽"
+description = "更深的魔力在帽檐回响。"
+effect_text = "回合内：每次使用火属性卡牌，所有手牌伤害 +20%；首次使用水属性卡牌，所有手牌本回合能耗 -1；使用草属性卡牌，抽牌 1 次，下回合抽牌 +1。"
+category = 6
+icon_color = Color(0.9, 0.4, 1, 1)
