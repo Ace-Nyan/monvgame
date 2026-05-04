@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://2dv3x8aw61lt"]
+[gd_scene load_steps=24 format=3 uid="uid://2dv3x8aw61lt"]
 
 [ext_resource type="Script" uid="uid://dvw0welydhyf4" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://45djveiai0qk" path="res://Scripts/CameraController2.gd" id="2_cam"]
@@ -7,6 +7,11 @@
 [ext_resource type="Script" path="res://Scripts/Combat/EnemyAIController.gd" id="5_aic"]
 [ext_resource type="PackedScene" path="res://Scenes/Combat/Humanoid.tscn" id="6_human"]
 [ext_resource type="PackedScene" path="res://Scenes/Combat/HUD.tscn" id="7_hud"]
+[ext_resource type="Resource" path="res://Data/Players/mofan.tres" id="8_player_data"]
+[ext_resource type="Resource" path="res://Data/Enemies/grass_sprite.tres" id="9_grass"]
+[ext_resource type="Resource" path="res://Data/Enemies/fire_imp.tres" id="10_imp"]
+[ext_resource type="Resource" path="res://Data/Enemies/stone_guard.tres" id="11_stone"]
+[ext_resource type="Script" path="res://Scripts/World/CollectiblePickup.gd" id="12_pickup"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_horizon_color = Color(0.66, 0.67, 0.68, 1)
@@ -46,6 +51,18 @@ size = Vector3(60, 1, 60)
 
 [sub_resource type="SphereShape3D" id="sphere_shape"]
 radius = 0.1
+
+[sub_resource type="SphereMesh" id="pickup_mesh"]
+radius = 0.35
+height = 0.7
+
+[sub_resource type="SphereShape3D" id="pickup_shape"]
+radius = 0.6
+
+[sub_resource type="StandardMaterial3D" id="pickup_mat"]
+albedo_color = Color(1, 1, 1, 1)
+metallic = 0.4
+roughness = 0.3
 
 [node name="GameScene" type="Node3D"]
 
@@ -139,15 +156,7 @@ script = ExtResource("2_cam")
 
 [node name="Combatant" type="Node" parent="player"]
 script = ExtResource("3_combat")
-display_name = "莫凡"
-faction = 0
-max_hp = 30
-max_ap = 3
-ap_regen_per_sec = 0.7
-hand_size = 4
-aggro_radius = 0.0
-leash_radius = 0.0
-starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte", &"vine_whip", &"water_jet", &"weakness_curse"])
+data = ExtResource("8_player_data")
 
 [node name="PlayerCombatController" type="Node" parent="player"]
 script = ExtResource("4_pcc")
@@ -171,20 +180,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
 
 [node name="Combatant" type="Node" parent="GrassSpriteEnemy"]
 script = ExtResource("3_combat")
-display_name = "草精灵"
-faction = 1
-max_hp = 22
-max_ap = 2
-ap_regen_per_sec = 0.5
-hand_size = 3
-aggro_radius = 7.0
-leash_radius = 14.0
-starting_card_ids = Array[StringName]([&"vine_whip", &"vine_whip", &"vine_whip", &"strike", &"defend"])
+data = ExtResource("9_grass")
 
 [node name="EnemyAI" type="Node" parent="GrassSpriteEnemy"]
 script = ExtResource("5_aic")
 combatant_path = NodePath("../Combatant")
-move_speed = 3.2
 
 
 [node name="FireImp" type="CharacterBody3D" parent="."]
@@ -204,20 +204,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0, 0)
 
 [node name="Combatant" type="Node" parent="FireImp"]
 script = ExtResource("3_combat")
-display_name = "火元素"
-faction = 1
-max_hp = 18
-max_ap = 3
-ap_regen_per_sec = 0.6
-hand_size = 3
-aggro_radius = 12.0
-leash_radius = 20.0
-starting_card_ids = Array[StringName]([&"fireball", &"fireball", &"fireball", &"weakness_curse", &"defend"])
+data = ExtResource("10_imp")
 
 [node name="EnemyAI" type="Node" parent="FireImp"]
 script = ExtResource("5_aic")
 combatant_path = NodePath("../Combatant")
-move_speed = 2.0
 
 
 [node name="StoneGuard" type="CharacterBody3D" parent="."]
@@ -237,21 +228,11 @@ transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, 0, -1.0, 0)
 
 [node name="Combatant" type="Node" parent="StoneGuard"]
 script = ExtResource("3_combat")
-display_name = "石卫兵"
-faction = 1
-max_hp = 40
-max_ap = 2
-ap_regen_per_sec = 0.4
-hand_size = 3
-aggro_radius = 6.0
-leash_radius = 12.0
-starting_card_ids = Array[StringName]([&"strike", &"strike", &"strike", &"defend", &"defend", &"riposte"])
+data = ExtResource("11_stone")
 
 [node name="EnemyAI" type="Node" parent="StoneGuard"]
 script = ExtResource("5_aic")
 combatant_path = NodePath("../Combatant")
-move_speed = 1.6
-attack_check_interval = 0.7
 
 
 [node name="LoreNote1" type="Label3D" parent="."]
@@ -279,3 +260,44 @@ no_depth_test = true
 
 
 [node name="HUD" parent="." instance=ExtResource("7_hud")]
+
+[node name="IronBandPickup" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.6, 2)
+script = ExtResource("12_pickup")
+relic_id = &"iron_band"
+
+[node name="Mesh" type="MeshInstance3D" parent="IronBandPickup"]
+mesh = SubResource("pickup_mesh")
+material_override = SubResource("pickup_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="IronBandPickup"]
+shape = SubResource("pickup_shape")
+
+[node name="Label" type="Label3D" parent="IronBandPickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+text = "铁血护腕\n敌HP×1.5"
+outline_modulate = Color(0, 0, 0, 1)
+outline_size = 6
+pixel_size = 0.006
+no_depth_test = true
+
+[node name="SwiftCharmPickup" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.6, 2)
+script = ExtResource("12_pickup")
+relic_id = &"swift_charm"
+
+[node name="Mesh" type="MeshInstance3D" parent="SwiftCharmPickup"]
+mesh = SubResource("pickup_mesh")
+material_override = SubResource("pickup_mat")
+
+[node name="Shape" type="CollisionShape3D" parent="SwiftCharmPickup"]
+shape = SubResource("pickup_shape")
+
+[node name="Label" type="Label3D" parent="SwiftCharmPickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+text = "迅捷护符\n玩家AP回复×1.4\n敌AP回复×0.8"
+outline_modulate = Color(0, 0, 0, 1)
+outline_size = 6
+pixel_size = 0.006
+no_depth_test = true
+

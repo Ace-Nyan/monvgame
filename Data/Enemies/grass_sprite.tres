@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CombatantData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"grass_sprite"
+display_name = "草精灵"
+faction = 1
+max_hp = 22
+max_ap = 2
+ap_regen_per_sec = 0.5
+hand_size = 3
+starting_card_ids = Array[StringName]([&"vine_whip", &"vine_whip", &"vine_whip", &"strike", &"defend"])
+aggro_radius = 7.0
+leash_radius = 14.0
+ai_move_speed = 3.2
+ai_check_interval = 0.4
+body_scale = Vector3(0.95, 0.95, 0.95)
+visual_tint = Color(0.7, 1.0, 0.6, 1)

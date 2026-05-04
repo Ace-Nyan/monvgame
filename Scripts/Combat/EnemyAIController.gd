@@ -8,19 +8,29 @@
 extends Node
 
 @export var combatant_path: NodePath = ^"../Combatant"
-@export var move_speed: float = 2.5
-@export var attack_check_interval: float = 0.4
 
 var _combatant: Combatant
 var _body: CharacterBody3D
 var _state: int = 0  # 0 idle, 1 chase, 2 attack
 var _scan_timer: float = 0.0
 var _target = null
+var _move_speed: float = 2.5
+var _check_interval: float = 0.4
 
 func _ready() -> void:
 	_combatant = get_node_or_null(combatant_path) as Combatant
 	if _combatant:
 		_body = _combatant.body3d as CharacterBody3D
+		_recompute()
+		EventBus.modifier_added.connect(func(_id, _key): _recompute())
+		EventBus.modifier_removed.connect(func(_id): _recompute())
+
+func _recompute() -> void:
+	if _combatant == null or _combatant.data == null:
+		return
+	var ctx := {"enemy_id": _combatant.data.id}
+	_move_speed = ModifierBus.compute(&"enemy_move_speed", _combatant.data.ai_move_speed, ctx)
+	_check_interval = ModifierBus.compute(&"enemy_check_interval", _combatant.data.ai_check_interval, ctx)
 
 func _physics_process(delta: float) -> void:
 	if _combatant == null or not _combatant.is_alive():
@@ -34,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		_body.velocity.y = 0
 	_scan_timer -= delta
 	if _scan_timer <= 0.0:
-		_scan_timer = attack_check_interval
+		_scan_timer = _check_interval
 		_rescan()
 	match _state:
 		0:
@@ -86,8 +96,8 @@ func _chase(delta: float) -> void:
 	if to.length() < 0.1:
 		return
 	to = to.normalized()
-	_body.velocity.x = to.x * move_speed
-	_body.velocity.z = to.z * move_speed
+	_body.velocity.x = to.x * _move_speed
+	_body.velocity.z = to.z * _move_speed
 	# 朝向目标
 	_face_dir(to)
 

@@ -24,7 +24,7 @@ var _leg_r: Node3D
 
 var _active_tween: Tween
 
-const FRAMES_TO_SECONDS: float = 1.0 / 12.0
+const FRAMES_TO_SECONDS: float = 1.0 / 12.0  # 仅作硬编码兜底；运行时改用 Tuning.frames_to_seconds()
 
 func _ready() -> void:
 	_head = get_node_or_null(head_path)
@@ -37,9 +37,10 @@ func _ready() -> void:
 func play_for_card(card: CardData) -> void:
 	if card == null:
 		return
-	var w: float = max(0.05, float(card.windup_frames) * FRAMES_TO_SECONDS)
-	var a: float = max(0.05, float(card.active_frames) * FRAMES_TO_SECONDS)
-	var r: float = max(0.05, float(card.recovery_frames) * FRAMES_TO_SECONDS)
+	var fts: float = Tuning.frames_to_seconds()
+	var w: float = max(0.05, float(card.windup_frames) * fts)
+	var a: float = max(0.05, float(card.active_frames) * fts)
+	var r: float = max(0.05, float(card.recovery_frames) * fts)
 	if _active_tween and _active_tween.is_valid():
 		_active_tween.kill()
 	_active_tween = create_tween()

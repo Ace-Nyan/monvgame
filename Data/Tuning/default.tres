@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="GameTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/GameTuning.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+frames_to_seconds = 0.083333
+recovery_damage_mult = 1.5
+interrupt_bonus_mult = 2.0
+default_player_max_hp = 30
+default_player_max_ap = 3
+default_player_ap_regen = 0.7
+default_player_hand_size = 4
+default_aggro_radius = 7.0
+default_leash_radius = 14.0
+default_ai_move_speed = 2.5
+default_ai_check_interval = 0.4
+matchup_strong_mult = 2.0
+matchup_weak_mult = 0.5

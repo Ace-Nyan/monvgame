@@ -18,7 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 EventBus="*res://Scripts/Core/EventBus.gd"
+Tuning="*res://Scripts/Core/Tuning.gd"
+ModifierBus="*res://Scripts/Core/ModifierBus.gd"
 CardRegistry="*res://Scripts/Core/CardRegistry.gd"
+RelicRegistry="*res://Scripts/Core/RelicRegistry.gd"
 CombatantRegistry="*res://Scripts/Combat/CombatantRegistry.gd"
 
 [dotnet]

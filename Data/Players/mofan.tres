@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/CombatantData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"mofan"
+display_name = "莫凡"
+faction = 0
+max_hp = 30
+max_ap = 3
+ap_regen_per_sec = 0.7
+hand_size = 4
+starting_card_ids = Array[StringName]([&"strike", &"strike", &"defend", &"defend", &"fireball", &"quick_jab", &"riposte", &"vine_whip", &"water_jet", &"weakness_curse"])
+aggro_radius = 0.0
+leash_radius = 0.0
+ai_move_speed = 0.0
+ai_check_interval = 0.0
+body_scale = Vector3(1, 1, 1)
+visual_tint = Color(1, 1, 1, 1)

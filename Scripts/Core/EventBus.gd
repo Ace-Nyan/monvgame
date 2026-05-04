@@ -29,3 +29,7 @@ signal resistance_changed(c)
 # === 牌堆 ===
 signal hand_changed(c)
 signal card_drawn(c, card)
+
+# === 修饰符 ===
+signal modifier_added(id, key)
+signal modifier_removed(id)

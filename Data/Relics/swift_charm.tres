@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"swift_charm"
+display_name = "迅捷护符"
+description = "AP 回复速度 +40%；所有敌人 AP 回复 -20%。"
+icon_color = Color(0.4, 0.9, 1.0, 1)
+modifiers = Array[Dictionary]([{
+"key": &"player_ap_regen",
+"op": "mul",
+"value": 1.4
+}, {
+"key": &"enemy_ap_regen",
+"op": "mul",
+"value": 0.8
+}])

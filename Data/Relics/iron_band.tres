@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RelicData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Core/RelicData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"iron_band"
+display_name = "铁血护腕"
+description = "所有敌人最大生命 +50%。"
+icon_color = Color(0.9, 0.4, 0.3, 1)
+modifiers = Array[Dictionary]([{
+"key": &"enemy_max_hp",
+"op": "mul",
+"value": 1.5
+}])
